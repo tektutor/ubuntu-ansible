@@ -2,7 +2,8 @@ FROM ubuntu:16.04
 
 RUN apt-get update && apt-get install -y openssh-server
 RUN mkdir /var/run/sshd
-RUN echo 'root:root' | chpasswd
+#RUN echo 'root:root' | chpasswd
+RUN echo 'jenkins:jenkins' | chpasswd
 RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 
 # SSH login fix. Otherwise user is kicked off after login
@@ -12,4 +13,5 @@ ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
 
 EXPOSE 22
+EXPOSE 80 
 CMD ["/usr/sbin/sshd", "-D"]
